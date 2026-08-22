@@ -1,18 +1,137 @@
-CREATE DATABASE insetos_db;
-
-USE insetos_db;
+CREATE DATABASE IF NOT EXISTS insetos_db;
+USE insetos_db
 
 CREATE TABLE insetos (
     id_insetos INT AUTO_INCREMENT PRIMARY KEY,
     nome_insetos VARCHAR(50) NOT NULL,
     nc_insetos VARCHAR(50) NOT NULL,
-    tdv_insetos INT NOT NULL,
-    tamanho_insetos DECIMAL(10, 2) NOT NULL,
+    ordem_insetos VARCHAR(65) NOT NULL,
+    longevidade_insetos DECIMAL(5, 1) NOT NULL,
+    tamanho_insetos DECIMAL(5, 2) NOT NULL,
     familia_insetos VARCHAR(70) NOT NULL,
     dieta_insetos VARCHAR(50) NOT NULL,
-    asas_insetos VARCHAR(10) NOT NULL,
+    tem_asas BOOLEAN NOT NULL DEFAULT 0
 );
 
+INSERT INTO insetos(nome_insetos, nc_insetos, ordem_insetos, longevidade_insetos, tamanho_insetos, familia_insetos, dieta_insetos, tem_asas) VALUES
+    ('Besouro-Rinoceronte', 'Oryctes nasicornis', 'Coleoptera', 3.0, 6.00, 'Scarabaeidae', 'Detritívoro', 1), 
+    ('Besouro-Hércules', 'Dynastes hercules', 'Coleoptera', 0.5, 17.00, 'Scarabaeidae', 'Detritívoro', 1),
+    ('Besouro-Rola-Bosta', 'Scarabaeus sacer', 'Coleoptera', 3.0, 3.00, 'Scarabaeidae', 'Coprófago', 1),
+    ('Besouro-Golias', 'Goliathus goliatus', 'Coleoptera', 1.0, 11.00, 'Scarabaeidae', 'Detritívoro', 1),
+    ('Besouro-Elefante', 'Megasoma elephas', 'Coleoptera', 0.3, 12.00, 'Scarabaeidae', 'Detritívoro', 1),
+    ('Besouro-Marmorado', 'Anomala dubia', 'Coleoptera', 0.2, 1.50, 'Scarabaeidae', 'Herbívoro', 1),
+    ('Besouro-Verde-das-Flores', 'Cetonia aurata', 'Coleoptera', 2.0, 2.00, 'Scarabaeidae', 'Nectarívoro', 1),
+    ('Besouro-Atlas', 'Chalcosoma atlas', 'Coleoptera', 0.7, 13.00, 'Scarabaeidae', 'Detritívoro', 1),
+    ('Besouro-Ouro', 'Chrysina resplendens', 'Coleoptera', 0.5, 3.00, 'Scarabaeidae', 'Herbívoro', 1),
+    ('Besouro-das-Videiras', 'Pelidnota punctata', 'Coleoptera', 1.0, 2.50, 'Scarabaeidae', 'Herbívoro', 1),
+
+    ('Besouro-Violino', 'Mormolyce phyllodes', 'Coleoptera', 1.5, 10.00, 'Carabidae', 'Carnívoro', 1),
+    ('Besouro-Bombardeiro', 'Brachinus crepitans', 'Coleoptera', 1.0, 1.20, 'Carabidae', 'Carnívoro', 1),
+    ('Besouro-Caçador-Dourado', 'Calosoma sycophanta', 'Coleoptera', 2.0, 3.00, 'Carabidae', 'Carnívoro', 1),
+    ('Besouro-Tigre-Verde', 'Cicindela campestris', 'Coleoptera', 1.0, 1.50, 'Carabidae', 'Carnívoro', 1),
+    ('Besouro-Carabídeo-Violeta', 'Carabus violaceus', 'Coleoptera', 2.0, 3.00, 'Carabidae', 'Carnívoro', 1),
+    ('Besouro-Corredor-Noturno', 'Nebria brevicollis', 'Coleoptera', 1.0, 1.20, 'Carabidae', 'Carnívoro', 1),
+    ('Besouro-Tigre-Praiano', 'Cicindela hybrida', 'Coleoptera', 1.0, 1.60, 'Carabidae', 'Carnívoro', 1),
+    ('Besouro-Caçador-Catarina', 'Calosoma inquisitor', 'Coleoptera', 2.0, 2.20, 'Carabidae', 'Carnívoro', 1),
+    ('Besouro-Grão-Negro', 'Harpalus rufipes', 'Coleoptera', 1.5, 1.40, 'Carabidae', 'Onívoro', 1),
+    ('Besouro-Bombardeiro-Gigante', 'Pheropsophus verticalis', 'Coleoptera', 1.2, 2.00, 'Carabidae', 'Carnívoro', 1),
+
+    ('Besouro-Sombrio-de-Cape', 'Circellium bacchus', 'Coleoptera', 5.0, 4.50, 'Scarabaeidae', 'Coprófago', 0),
+    ('Besouro-do-Deserto-de-Namibe', 'Pachysoma striatum', 'Coleoptera', 2.0, 3.00, 'Scarabaeidae', 'Detritívoro', 0),
+    ('Besouro-Cadeia-de-Avis', 'Pachysoma denticolle', 'Coleoptera', 1.5, 2.20, 'Scarabaeidae', 'Detritívoro', 0),
+    ('Besouro-Rola-Bosta-Caminhador', 'Scarabaeus ambiguus', 'Coleoptera', 1.8, 2.80, 'Scarabaeidae', 'Coprófago', 0),
+    ('Besouro-do-Deserto-Coletor', 'Pachysoma hippocrates', 'Coleoptera', 2.0, 2.70, 'Scarabaeidae', 'Detritívoro', 0),
+    ('Escaravelho-Sombrio-de-Richtersveld', 'Circellium morbillosum', 'Coleoptera', 3.0, 3.20, 'Scarabaeidae', 'Coprófago', 0),
+    ('Besouro-Rola-Bosta-Gordo', 'Eucranium arachnoides', 'Coleoptera', 2.0, 2.00, 'Scarabaeidae', 'Coprófago', 0),
+    ('Besouro-Corredor-das-Pampas', 'Glyphoderus sterquilinus', 'Coleoptera', 1.5, 1.80, 'Scarabaeidae', 'Coprófago', 0),
+    ('Besouro-Escavador-Siderus', 'Glyphoderus monticola', 'Coleoptera', 1.8, 1.90, 'Scarabaeidae', 'Coprófago', 0),
+    ('Besouro-Caminhador-Anactus', 'Anactus edentulus', 'Coleoptera', 2.0, 2.10,'Scarabaeidae', 'Detritívoro', 0),
+
+    ('Besouro-Caracol-Carcaju', 'Cychrus caraboides', 'Coleoptera', 2.0, 1.90, 'Carabidae', 'Carnívoro', 0),
+    ('Besouro-Terrestre-Coriáceo', 'Carabus coriaceus', 'Coleoptera', 3.0, 4.00, 'Carabidae', 'Carnívoro', 0),
+    ('Besouro-Cego-das-Cavernas', 'Anophthalmus hitleri', 'Coleoptera', 1.5, 0.50, 'Carabidae', 'Carnívoro', 0),
+    ('Besouro-Pedregal-Gigante', 'Anthia thoracic', 'Coleoptera', 2.0, 5.50, 'Carabidae', 'Carnívoro', 0),
+    ('Besouro-Corredor-Ibérico', 'Carabus rugosus', 'Coleoptera', 2.0, 3.00, 'Carabidae', 'Carnívoro', 0),
+    ('Besouro-Escavador-Sombrio', 'Scarites buparius', 'Coleoptera', 2.5, 4.20, 'Carabidae', 'Carnívoro', 0),
+    ('Besouro-Devorador-de-Lesmas', 'Carabus nemoralis', 'Coleoptera', 2.0, 2.60, 'Carabidae', 'Carnívoro', 0),
+    ('Besouro-Tigre-Sem-Asas', 'Manticora imperator', 'Coleoptera', 3.0, 6.50, 'Carabidae', 'Carnívoro', 0),
+    ('Besouro-Predador-de-Oito-Pontos', 'Anthia sexguttata', 'Coleoptera', 2.0, 4.00,  'Carabidae', 'Carnívoro', 0),
+    ('Besouro-Terrestre-Dourado', 'Carabus auratus', 'Coleoptera', 2.0, 2.70, 'Carabidae', 'Carnívoro', 0),
+
+    ('Louva-a-Deus-Orquídea', 'Hymenopus coronatus', 'Mantodea', 0.7, 6.00, 'Hymenopodidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Fantasma', 'Phyllocrania paradoxa', 'Mantodea', 0.8, 5.00, 'Hymenopodidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Flor-Espinosa', 'Pseudocreobotra wahlbergii', 'Mantodea', 0.8, 5.00, 'Hymenopodidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Flor-Indiana', 'Creobroter gemmatus', 'Mantodea', 0.7, 4.00, 'Hymenopodidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Flor-Japonês', 'Acromantis japonica', 'Mantodea', 0.6, 3.00, 'Hymenopodidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Flor-de-Banda-Branca', 'Theopropus elegans', 'Mantodea', 0.7, 4.50, 'Hymenopodidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Flor-Olho-de-Pintor', 'Creobroter pictipennis', 'Mantodea', 0.7, 4.00, 'Hymenopodidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Musgo-Asiático', 'Majangella moultoni', 'Mantodea', 0.6, 3.50, 'Hymenopodidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Flor-Espinosa-de-Ocellus', 'Pseudocreobotra ocellata', 'Mantodea', 0.8, 4.80, 'Hymenopodidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Flor-Anão-de-Formosa', 'Acromantis formosana', 'Mantodea', 0.6, 3.20, 'Hymenopodidae', 'Carnívoro', 1),
+
+    ('Louva-a-Deus-Religioso', 'Mantis religiosa', 'Mantodea', 0.8, 7.50, 'Mantidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Folha-Morta', 'Deroplatys desiccata', 'Mantodea', 0.8, 8.00, 'Mantidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Escudo-Maligno', 'Rhombodera basalis', 'Mantodea', 1.2, 9.00, 'Mantidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Chines', 'Tenodera sinensis', 'Mantodea', 0.9, 10.00, 'Mantidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Gigante-Africano', 'Sphodromantis viridis', 'Mantodea', 1.0, 9.50, 'Mantidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Folha-Morta-Malaio', 'Deroplatys lobata', 'Mantodea', 0.9, 7.00, 'Mantidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Verde-Australiano', 'Orthodera novaezealandiae', 'Mantodea', 0.7, 4.50, 'Mantidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Escudo-Giant', 'Rhombodera megaera', 'Mantodea', 1.1, 11.00, 'Mantidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Folha-Trigonodera', 'Deroplatys trigonodera', 'Mantodea', 0.8, 7.50, 'Mantidae', 'Carnívoro', 1),
+    ('Louva-a-Deus-Carolina', 'Stagmomantis carolina', 'Mantodea', 0.8, 6.00, 'Mantidae', 'Carnívoro', 1),
+
+    ('Louva-a-Deus-Corredor-de-Ampanihy', 'Ampanihy ampanihyensis', 'Mantodea', 0.7, 2.50, 'Hymenopodidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Terrestre-de-Madagascar', 'Oxypiloidea murphyi', 'Mantodea', 0.8, 3.00, 'Hymenopodidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Anão-Sem-Asas', 'Pseudoxypilus heymonsi', 'Mantodea', 0.6, 2.00, 'Hymenopodidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Flor-Sombrio', 'Junodia amoena', 'Mantodea', 0.7, 2.80, 'Hymenopodidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Formiga-da-Tanzânia', 'Chlidonoptera lestoni', 'Mantodea', 0.6, 2.20, 'Hymenopodidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Terrestre-de-Ankaratra', 'Oxypiloidea ankaratrae', 'Mantodea', 0.7, 2.70, 'Hymenopodidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Anão-de-Sumatra', 'Pseudoxypilus sumatranus', 'Mantodea', 0.6, 2.10, 'Hymenopodidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Flor-Sombrio-de-Natal', 'Junodia natalensis', 'Mantodea', 0.7, 2.60, 'Hymenopodidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Corredor-de-Toliara', 'Ampanihy toliaraensis', 'Mantodea', 0.7, 2.40, 'Hymenopodidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Flor-da-Nigéria', 'Chlidonoptera nigerica', 'Mantodea', 0.6, 2.30, 'Hymenopodidae', 'Carnívoro', 0),
+
+    ('Louva-a-Deus-Terrestre-de-Zululand', 'Ligaria laevivis', 'Mantodea', 0.7, 2.50, 'Mantidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Rastejante-da-Zâmbia', 'Ligaria brevis', 'Mantodea', 0.6, 2.30, 'Mantidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Corredor-da-Tanzânia', 'Entella delalandii', 'Mantodea', 0.7, 3.00, 'Mantidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Terrestre-de-Natal', 'Entella natalina', 'Mantodea', 0.7, 2.80, 'Mantidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Sombrio-de-Transvaal', 'Entella transvaalica', 'Mantodea', 0.6, 2.60, 'Mantidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Tronco-do-Congo', 'Ligaria deplanata', 'Mantodea', 0.7, 2.70, 'Mantidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Terrestre-Anão', 'Paramantis nana', 'Mantodea', 0.6, 3.20, 'Mantidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Corredor-da-Somália', 'Entella somalica', 'Mantodea', 0.7, 2.90, 'Mantidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Terrestre-de-Kenia', 'Ligaria kenyensis', 'Mantodea', 0.8, 3.10, 'Mantidae', 'Carnívoro', 0),
+    ('Louva-a-Deus-Rastejante-da-Etiópia', 'Entella ethiopica', 'Mantodea', 0.7, 2.70, 'Mantidae', 'Carnívoro', 0),
+
+    ('Cupim-de-Madrone-Alado', 'Zootermopsis angusticollis', 'Blattodea', 10.0, 2.50, 'Termitidae', 'Herbívoro', 1),
+    ('Cupim-Subterrâneo-Alado', 'Coptotermes formosanus', 'Blattodea', 12.0, 1.50, 'Termitidae', 'Herbívoro', 1),
+    ('Cupim-de-Madeira-Seca-Alado', 'Cryptotermes brevis', 'Blattodea', 8.0, 1.10, 'Termitidae', 'Herbívoro', 1),
+    ('Cupim-de-Montículo-Alado', 'Cornitermes cumulans', 'Blattodea', 15.0, 1.80, 'Termitidae', 'Herbívoro', 1),
+    ('Cupim-Catedrático-Alado', 'Nasutitermes triodiae', 'Blattodea', 20.0, 2.00, 'Termitidae', 'Herbívoro', 1),
+    ('Cupim-Arbóreo-Alado', 'Nasutitermes corniger', 'Blattodea', 10.0, 1.40, 'Termitidae', 'Herbívoro', 1),
+    ('Cupim-do-Deserto-Alado', 'Amitermes wheeleri', 'Blattodea', 5.0, 1.20, 'Termitidae', 'Herbívoro', 1),
+    ('Cupim-Gigante-Africano-Alado', 'Macrotermes goliath', 'Blattodea', 15.0, 3.80, 'Termitidae', 'Herbívoro', 1),
+    ('Cupim-Cortador-Alado', 'Syntermes dirus', 'Blattodea', 12.00, 2.2, 'Termitidae', 'Herbívoro', 1),
+    ('Cupim-do-Solo-Alado', 'Reticulitermes flavipes', 'Blattodea', 7.0, 1.00, 'Termitidae', 'Herbívoro', 1),
+
+    ('Cupim-Soldado-Nasuto', 'Nasutitermes exitiosus', 'Blattodea', 3.0, 0.60, 'Termitidae', 'Herbívoro', 0),
+    ('Cupim-Operário-de-Madeira', 'Cryptotermes cavifrons', 'Blattodea', 2.0, 0.50, 'Termitidae', 'Herbívoro', 0),
+    ('Cupim-Soldado-Mandibulado', 'Coptotermes gestroi', 'Blattodea', 4.0, 0.8, 'Termitidae', 'Herbívoro', 0),
+    ('Cupim-Operário-Construtor', 'Cornitermes cumulans (Op)', 'Blattodea', 2.5, 0.70, 'Termitidae', 'Herbívoro', 0),
+    ('Cupim-Soldado-Gigante', 'Macrotermes bellicosus', 'Blattodea', 5.0, 2.0, 'Termitidae', 'Herbívoro', 0),
+    ('Cupim-Operário-Coletores', 'Hodotermes mossambicus', 'Blattodea', 2.0, 0.9, 'Termitidae', 'Herbívoro', 0),
+    ('Cupim-Soldado-Catedrático', 'Nasutitermes triodiae (Sol)', 'Blattodea', 3.5, 0.70, 'Termitidae', 'Herbívoro', 0),
+    ('Cupim-Operário-Subterrâneo', 'Reticulitermes virginicus', 'Blattodea', 2.0, 0.40, 'Termitidae', 'Herbívoro', 0),
+    ('Cupim-Soldado-de-Seringueira', 'Coptotermes curvignathus', 'Blattodea', 4.0, 0.85, 'Termitidae', 'Herbívoro', 0),
+    ('Cupim-Soldado-Cortador', 'Syntermes dirus (Sol)', 'Blattodea', 4.5, 1.70, 'Termitidae', 'Herbívoro', 0);
+
 CREATE TABLE habitats (
-    id_habitats
-)
+    id_habitats INT AUTO_INCREMENT PRIMARY KEY,
+    nome_habitats VARCHAR(50),
+    clima_habitats VARCHAR(50),
+    bioma_habitats VARCHAR(50),
+    descricao_habitats TEXT
+);
+
+INSERT INTO habitats (nome_habitats, clima_habitats, bioma_habitats, descricao_habitats) VALUES();
+
+SELECT * FROM insetos;

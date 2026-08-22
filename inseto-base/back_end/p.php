@@ -14,3 +14,5 @@
             echo "Rapaz, parece que ocorreu um erro: " . $e -> getMessage();
         };
 ?>
+
+<!-- o endereço é http://localhost/inseto-base/back_end/p.php -->

@@ -1,3 +1,16 @@
-ele projeto é um trabalho de 2° semestre do meu curso estou com 3 amigos devs nosso projeto é sobre um grande sistema de informações de insetos e invertebrados.
+HTML5 --
+No que tange à camada de estruturação e semântica com o HTML5, o projeto foi arquitetado para garantir a máxima acessibilidade, otimização para motores de busca e integridade do DOM. Adicionamos marcações estritamente semânticas utilizando elementos modernos como <header>, <nav>, <main> e <section>, o que substituiu tags genéricas e organizou logicamente o fluxo de informações da aplicação. Como melhoria estrutural, padronizamos os identificadores de ancoragem (#inicio, #insetos e #curiosidades), garantindo que o roteamento interno e os saltos de página operem de forma fluida e sem falhas de navegação.
 
-ass. Grupo dos Devs tops
+CSS3 --
+Para a camada de apresentação e identidade visual, o CSS3 foi estruturado sob o conceito de um Design System robusto, priorizando a manutenibilidade e a performance de renderização no navegador. Implementamos variáveis globais no escopo :root para centralizar a paleta de cores baseada em tons esmeralda, verdes neon e neutros, o que simplifica alterações globais de tema. Além disso, substituímos layouts rígidos por um CSS Grid inteligente com auto-fit e minmax, permitindo que os cards se adaptem organicamente a qualquer resolução de tela, e aplicamos refinamentos visuais como glassmorphism, micro-interações de hover e a normalização cross-browser da propriedade background-clip para garantir gradientes consistentes em diferentes engines de renderização.
+
+JavaScript --
+No lado do cliente, o Vanilla JavaScript foi empregado para gerenciar toda a interatividade e a dinâmica de exibição de dados temporários de teste. Criamos coleções de objetos normalizados que estruturam o catálogo taxonômico de espécies — englobando borboletas, abelhas, formigas, besouros, joaninhas e louva-a-deus — junto a um módulo dedicado a curiosidades científicas. A grande melhoria nessa camada foi a automatização da renderização por meio de laços forEach combinados com Template Literals, o que permitiu injetar dinamicamente os cards no DOM de forma limpa, desacoplando o conteúdo bruto do código estático e aprimorando a experiência do usuário com o comportamento de rolagem nativa scrollIntoView.
+
+PHP 8.2 --
+No backend, a escolha do PHP 8.2 estruturou o motor de processamento server-side da aplicação, garantindo segurança, roteamento e estabilidade nas requisições. Configuramos o ambiente local utilizando o servidor Apache do XAMPP para eliminar gargalos de caminhos relativos e erros de pathing que costumam afetar o desenvolvimento full-stack. Como melhoria arquitetural de grande peso, implementamos a base para uma camada de persistência orientada a objetos leve e resiliente utilizando PDO, preparando o terreno lógico para interceptar dados via requisições HTTP e automatizar o fluxo de inserção e resgate diretamente do servidor.
+
+Banco de Dados MySQL (insetos_db)
+Na camada de persistência de dados, o banco relacional MySQL foi estruturado através do schema insetos_db, projetado especificamente para gerenciar o armazenamento relacional de longo prazo do sistema. Adicionamos tabelas normalizadas e otimizadas para acomodar tanto o catálogo de espécies quanto as curiosidades científicas, eliminando a dependência futura dos arrays estáticos do JavaScript. Essa modelagem garante que, com a conclusão da integração via PHP, a aplicação transicione para um modelo dinâmico e escalável de ponta a ponta, capaz de registrar, manipular e recuperar informações em tempo real com total integridade referencial.
+
+Ass. Devs pqs

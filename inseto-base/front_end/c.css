@@ -41,8 +41,8 @@ header h1 {
     font-weight: 700;
     letter-spacing: -0.5px;
     background: linear-gradient(45deg, rgb(43, 43, 224), var(--verde-neon));
-    background-clip: text;                 
-    -webkit-background-clip: text;         
+    background-clip: text;            
+    -webkit-background-clip: text;        
     color: transparent;                    
     -webkit-text-fill-color: transparent;  
 }
@@ -54,6 +54,10 @@ nav a {
     font-weight: 500;
     font-size: 0.95rem;
     transition: color 0.2s ease;
+}
+
+a {
+    text-decoration: none;
 }
 
 nav a:hover {
@@ -116,7 +120,7 @@ section {
     transform: scale(1.02);
 }
 
-#insetos h2, #curiosidades h2 {
+#insetos h2, #curiosidades h2, .container-categorias h2 {
     font-size: 1.8rem;
     color: var(--verde-escuro);
     margin-bottom: 25px;
@@ -124,7 +128,11 @@ section {
     display: inline-block;
 }
 
-#insetos h2::after {
+.conheca {
+    text-align: center;
+}
+
+#insetos h2::after, .container-categorias h2::after {
     content: '';
     position: absolute;
     left: 0;
@@ -135,13 +143,19 @@ section {
     border-radius: 2px;
 }
 
-#listaInsetos, #listaCuriosidades {
+#listaInsetos, #listaCuriosidades, .grid-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 25px;
 }
 
-.card-inseto {
+.container-categorias {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card-inseto, .card-ordem {
     background: var(--bg-card);
     padding: 30px 25px;
     border-radius: 16px;
@@ -150,9 +164,13 @@ section {
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; 
 }
 
-.card-inseto::before {
+.card-inseto::before, .card-ordem::before {
     content: '';
     position: absolute;
     top: 0;
@@ -164,27 +182,30 @@ section {
     transition: opacity 0.3s ease;
 }
 
-.card-inseto:hover {
+.card-inseto:hover, .card-ordem:hover {
     transform: translateY(-8px);
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
 }
 
-.card-inseto:hover::before {
+.card-inseto:hover::before, .card-ordem:hover::before {
     opacity: 1;
 }
 
-.card-inseto h3 {
+.card-inseto h3, .card-ordem h3 {
     color: var(--verde-principal);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
-.card-inseto p {
+.card-inseto p, .card-ordem p {
     color: var(--texto-secundario);
     font-size: 0.95rem;
+}
+
+.card-ordem a {
+    text-decoration: none;
+    display: block;
+    color: inherit;
 }
 
 button {
@@ -217,7 +238,7 @@ button:hover {
         font-size: 2rem;
     }
 
-    #insetos h2::after {
+    #insetos h2::after, .container-categorias h2::after {
         left: 50%;
         transform: translateX(-50%);
     }
@@ -226,4 +247,30 @@ button:hover {
         flex-direction: column;
         gap: 15px;
     }
+}
+.grid-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto; 
+}
+
+.card-ordem {
+    flex: 1;
+    min-width: 260px; /* Garante que não fiquem espremidos */
+    background: var(--bg-card);
+    padding: 30px 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--borda-sutil);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    top: -25px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

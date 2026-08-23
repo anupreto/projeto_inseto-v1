@@ -27,37 +27,30 @@
                 <img src="https://tse1.explicit.bing.net/th/id/OIP.EN6th-31YvVgwB2q9CKGaQHaEO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Inseto na natureza">
             </div>
         </section>
-
-        <section id="insetos">
-            <h2>Conheça os insetos 🐛</h2>
+            <h2 class="conheca">Conheça os insetos 🐛</h2>
             <div id="listaInsetos">
                 <?php
-                    include 'p.php';
-                    $resultado = $pdo->query("SELECT * FROM insetos");
-                    
-                    while($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
-                        echo "<div class='card-inseto'>";
-                        echo "<h3>🪲 " . $row['nome_insetos'] . "</h3>";
-                        echo "<p><strong>Nome Científico:</strong> " . $row['nc_insetos'] . "</p>";
-                        echo "<p><strong>Família:</strong> " . $row['familia_insetos'] . "</p>";
-                        echo "<p><strong>Dieta:</strong> " . $row['dieta_insetos'] . "</p>";
-                        
-                        $temAsas = $row['tem_asas'] ? "Sim" : "Não";
-                        echo "<p><strong>Tem asas?</strong> " . $temAsas . "</p>";
-                        echo "</div>";
-                    }
-                ?>
-            </div>
-        </section>
+                    include 'banco.php';
+                    $sel_ordem = "SELECT ordem_insetos, COUNT(*) as total FROM insetos GROUP BY ordem_insetos";
+                    $start = $pdo->query($sel_ordem);
+                    $categorias = $start->fetchAll(PDO :: FETCH_ASSOC);
+                    ?>
 
-        <section id="curiosidades">
-            <h2>Curiosidades 💡</h2>
-            <div id="listaCuriosidades"></div>
-        </section>
+                    <div class="container-categorias">
+                        
+                        <div class="grid-cards">
+                            <?php foreach($categorias as $cat):?>
+                            <div class="card-ordem">
+                                <a href="categoria.php?ordem=<?php echo urlencode($cat['ordem_insetos']);?>">
+                                    <h3><?php echo ucwords($cat['ordem_insetos']);?></h3>
+                                    <p><?php echo $cat['total'];?> espécies cadastradas</p>
+                                </a>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
     </main>
     
     <script src="../front_end/j.js"></script>
 </body>
 </html>
-
-<!-- o endereço é http://localhost/inseto-base/back_end/index.php -->

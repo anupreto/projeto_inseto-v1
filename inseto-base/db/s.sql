@@ -8,7 +8,7 @@ CREATE TABLE insetos (
     ordem_insetos VARCHAR(65) NOT NULL,
     familia_insetos VARCHAR(65) NOT NULL,
     dieta_insetos VARCHAR(50) NOT NULL,
-    destaque BOOLEAN NOT NULL DEFAULT ,
+    destaque BOOLEAN NOT NULL DEFAULT 0,
     curisidade TEXT,
     foto_insetos TEXT
 );
@@ -385,8 +385,8 @@ INSERT INTO insetos(nome_insetos, nc_insetos, ordem_insetos, familia_insetos, di
 ('Estrela-do-mar de areia fina', 'Astropecten aranciacus', 'Equinodermo', 'Astropectinidae', 'Carnívoro', 'Estrela de areia com margens pectinadas, caçadora noturna de moluscos e vermes.'),
 ('Ofiúro de braços longos', 'Amphipholis squamata', 'Equinodermo', 'Amphiuridae', 'Detritívoro', 'Pequeno ofiúro cosmopolita que incuba seus ovos internamente até a eclosão.'),
 ('Lírio-do-mar gigante de fenda', 'Lamprometra palmata', 'Equinodermo', 'Mariametridae', 'Suspensívoro', 'Crinoide tropical com múltiplos braços flexíveis que formam leques filtradores.');
-    UPDATE insetos SET foto_insetoss = 'https://cdn.questlog.gg/crimson desert/assets/_sprites/itemicon_prefab_cd_m__rhinocerosbeetle__.webp' WHERE id_insetoss = ;
-    UPDATE insetos SET destaque =  WHERE id_insetos IN(, , , , , );
+    UPDATE insetos SET foto_insetoss = 'https://cdn.questlog.gg/crimson desert/assets/_sprites/itemicon_prefab_cd_m__rhinocerosbeetle__.webp' WHERE id_insetos;
+    UPDATE insetos SET destaque = 1 WHERE id_insetos IN(1, 62, 123, 184, 245, 306);
 CREATE TABLE habitats (
     id_habitats INT AUTO_INCREMENT PRIMARY KEY,
     nome_habitats VARCHAR(),
@@ -394,5 +394,7 @@ CREATE TABLE habitats (
     bioma_habitats VARCHAR(),
     descricao_habitats TEXT
 );
+
+DROP TABLE insetos;
 TRUNCATE Table insetos;
 SELECT * FROM insetos;

@@ -387,11 +387,12 @@ INSERT INTO insetos(nome_insetos, nc_insetos, ordem_insetos, familia_insetos, di
 ('Lírio-do-mar gigante de fenda', 'Lamprometra palmata', 'Equinodermo', 'Mariametridae', 'Suspensívoro', 'Crinoide tropical com múltiplos braços flexíveis que formam leques filtradores.');
     UPDATE insetos SET foto_insetoss = 'https://cdn.questlog.gg/crimson desert/assets/_sprites/itemicon_prefab_cd_m__rhinocerosbeetle__.webp' WHERE id_insetos;
     UPDATE insetos SET destaque = 1 WHERE id_insetos IN(1, 62, 123, 184, 245, 306);
+
 CREATE TABLE habitats (
     id_habitats INT AUTO_INCREMENT PRIMARY KEY,
-    nome_habitats VARCHAR(),
-    clima_habitats VARCHAR(),
-    bioma_habitats VARCHAR(),
+    nome_habitats VARCHAR(50),
+    clima_habitats VARCHAR(50),
+    bioma_habitats VARCHAR(65),
     descricao_habitats TEXT
 );
 

@@ -393,9 +393,13 @@ CREATE TABLE habitats (
     nome_habitats VARCHAR(50),
     clima_habitats VARCHAR(50),
     bioma_habitats VARCHAR(65),
-    descricao_habitats TEXT
+    descricao_habitats TEXT, 
+     id_insetos INT, 
+    CONSTRAINT fk_habitats_insetos  FOREIGN KEY (id_insetos) 
+    REFERENCES insetos(id_insetos)
 );
 
+INSERT INTO (nome_habitats, )
 DROP TABLE insetos;
 TRUNCATE Table insetos;
 SELECT * FROM insetos;

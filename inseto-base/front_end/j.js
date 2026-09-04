@@ -1,114 +1,79 @@
-// fazer inte// ==========================================
+// ========================================
 // PROJETO INSETOS
-// j.js
-// ==========================================
-
-// Dados iniciais dos insetos
-const insetos = [
-    {
-        nome: "Borboleta",
-        categoria: "Lepidópteros",
-        descricao: "Inseto conhecido por suas asas coloridas e pela metamorfose.",
-        curiosidade: "As borboletas utilizam as antenas para sentir odores."
-    },
-
-    {
-        nome: "Abelha",
-        categoria: "Himenópteros",
-        descricao: "Inseto polinizador que vive em colônias.",
-        curiosidade: "As abelhas são importantes para a polinização."
-    },
-
-    {
-        nome: "Formiga",
-        categoria: "Himenópteros",
-        descricao: "Inseto social que vive em colônias organizadas.",
-        curiosidade: "As formigas conseguem trabalhar em grupo para encontrar alimento."
-    },
-
-    {
-        nome: "Joaninha",
-        categoria: "Coleópteros",
-        descricao: "Pequeno besouro geralmente vermelho com manchas.",
-        curiosidade: "Joaninhas ajudam no controle de pulgões."
-    },
-
-    {
-        nome: "Besouro",
-        categoria: "Coleópteros",
-        descricao: "Grupo de insetos extremamente diversificado.",
-        curiosidade: "Existem milhares de espécies de besouros."
-    },
-
-    {
-        nome: "Gafanhoto",
-        categoria: "Ortópteros",
-        descricao: "Inseto conhecido pelas grandes pernas traseiras.",
-        curiosidade: "Gafanhotos conseguem saltar grandes distâncias."
-    },
-
-    {
-        nome: "Grilo",
-        categoria: "Ortópteros",
-        descricao: "Inseto conhecido pelo som produzido pelos machos.",
-        curiosidade: "O som do grilo é produzido pelo atrito das asas."
-    },
-
-    {
-        nome: "Libélula",
-        categoria: "Odonatos",
-        descricao: "Inseto encontrado principalmente próximo de rios e lagos.",
-        curiosidade: "As libélulas possuem uma excelente visão."
-    }
-];
+// JavaScript - Front-end
+// ========================================
 
 
-// ==========================================
-// ELEMENTOS
-// ==========================================
+// Quando a página carregar
+document.addEventListener("DOMContentLoaded", function () {
 
-const conteudo = document.querySelector(".wiki-content");
-const sidebar = document.querySelector(".wiki-sidebar");
-const navegacao = document.querySelector(".topo-nav");
+    carregarInsetos();
 
-
-// ==========================================
-// INICIALIZAÇÃO
-// ==========================================
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    carregarPagina();
-    carregarSidebar();
-    configurarNavegacao();
+    configurarMenu();
 
 });
 
 
-// ==========================================
-// CARREGAR PÁGINA
-// ==========================================
+// ========================================
+// VARIÁVEIS
+// ========================================
 
-function carregarPagina() {
+let insetos = [];
 
-    if (!conteudo) {
-        console.error("Elemento .wiki-content não encontrado.");
-        return;
-    }
 
-    conteudo.innerHTML = "";
+// Elementos do HTML
+const conteudo = document.querySelector(".wiki-content");
+const sidebar = document.querySelector(".wiki-sidebar");
+const menu = document.querySelector(".topo-nav");
 
-    criarIntroducao();
-    criarCategorias();
+
+// ========================================
+// CARREGAR INSETOS
+// ========================================
+
+function carregarInsetos() {
+
+    fetch("../back_end/p.php")
+
+        .then(function (resposta) {
+
+            return resposta.json();
+
+        })
+
+        .then(function (dados) {
+
+            insetos = dados;
+
+            mostrarInicio();
+
+            mostrarSidebar();
+
+        })
+
+        .catch(function (erro) {
+
+            console.log("Erro ao carregar insetos:", erro);
+
+            conteudo.innerHTML = `
+                <section class="artigo-bloco">
+                    <h2>Erro</h2>
+                    <p>Não foi possível carregar os insetos.</p>
+                </section>
+            `;
+
+        });
 
 }
 
 
-// ==========================================
-// INTRODUÇÃO
-// ==========================================
+// ========================================
+// PÁGINA INICIAL
+// ========================================
 
-function criarIntroducao() {
+function mostrarInicio() {
+
+    conteudo.innerHTML = "";
 
     const bloco = document.createElement("section");
 
@@ -118,26 +83,28 @@ function criarIntroducao() {
         <h2>Mundo dos Insetos</h2>
 
         <p>
-            Bem-vindo ao portal de informações sobre insetos.
-            Aqui você poderá conhecer diferentes espécies,
-            categorias e curiosidades.
+            Bem-vindo ao nosso portal sobre insetos
+            e invertebrados.
         </p>
 
         <p>
-            Escolha uma categoria abaixo para começar a explorar.
+            Escolha uma categoria abaixo para conhecer
+            diferentes tipos de insetos.
         </p>
     `;
 
     conteudo.appendChild(bloco);
 
+    mostrarCategorias();
+
 }
 
 
-// ==========================================
-// CATEGORIAS
-// ==========================================
+// ========================================
+// MOSTRAR CATEGORIAS
+// ========================================
 
-function criarCategorias() {
+function mostrarCategorias() {
 
     const bloco = document.createElement("section");
 
@@ -147,7 +114,7 @@ function criarCategorias() {
         <h2>Categorias</h2>
 
         <p>
-            Encontre informações sobre diferentes grupos de insetos.
+            Veja os grupos de insetos cadastrados.
         </p>
     `;
 
@@ -155,39 +122,48 @@ function criarCategorias() {
 
     grid.classList.add("grid-categorias");
 
-    const categorias = obterCategorias();
+    const categorias = pegarCategorias();
 
-    categorias.forEach(categoria => {
-
-        const quantidade = insetos.filter(
-            inseto => inseto.categoria === categoria
-        ).length;
+    categorias.forEach(function (categoria) {
 
         const card = document.createElement("div");
 
         card.classList.add("card-categoria");
 
-        card.innerHTML = `
-            <h3>${categoria}</h3>
+        const titulo = document.createElement("h3");
 
-            <p>
-                ${quantidade} inseto(s) cadastrado(s).
-            </p>
+        titulo.textContent = categoria;
 
-            <a href="#">
-                Ver insetos
-            </a>
-        `;
+        const quantidade = document.createElement("p");
 
-        const link = card.querySelector("a");
+        const total = insetos.filter(function (inseto) {
 
-        link.addEventListener("click", event => {
+            return inseto.categoria === categoria;
+
+        }).length;
+
+        quantidade.textContent =
+            total + " inseto(s)";
+
+        const link = document.createElement("a");
+
+        link.href = "#";
+
+        link.textContent = "Ver insetos";
+
+        link.addEventListener("click", function (event) {
 
             event.preventDefault();
 
             mostrarCategoria(categoria);
 
         });
+
+        card.appendChild(titulo);
+
+        card.appendChild(quantidade);
+
+        card.appendChild(link);
 
         grid.appendChild(card);
 
@@ -200,58 +176,80 @@ function criarCategorias() {
 }
 
 
-// ==========================================
-// OBTER CATEGORIAS
-// ==========================================
+// ========================================
+// PEGAR CATEGORIAS
+// ========================================
 
-function obterCategorias() {
+function pegarCategorias() {
 
-    return [...new Set(
-        insetos.map(inseto => inseto.categoria)
-    )];
+    const categorias = [];
+
+    insetos.forEach(function (inseto) {
+
+        if (!categorias.includes(inseto.categoria)) {
+
+            categorias.push(inseto.categoria);
+
+        }
+
+    });
+
+    return categorias;
 
 }
 
 
-// ==========================================
-// MOSTRAR CATEGORIA
-// ==========================================
+// ========================================
+// MOSTRAR INSETOS DA CATEGORIA
+// ========================================
 
 function mostrarCategoria(categoria) {
 
-    const antigo = document.querySelector("#resultado-categoria");
+    const antigo =
+        document.querySelector(".resultado-categoria");
 
     if (antigo) {
-        antigo.remove();
-    }
 
-    const encontrados = insetos.filter(
-        inseto => inseto.categoria === categoria
-    );
+        antigo.remove();
+
+    }
 
     const bloco = document.createElement("section");
 
     bloco.classList.add("artigo-bloco");
 
-    bloco.id = "resultado-categoria";
+    bloco.classList.add("resultado-categoria");
 
-    bloco.innerHTML = `
-        <h2>${categoria}</h2>
+    const titulo = document.createElement("h2");
 
-        <p>
-            Insetos pertencentes a esta categoria:
-        </p>
-    `;
+    titulo.textContent = categoria;
+
+    const texto = document.createElement("p");
+
+    texto.textContent =
+        "Insetos dessa categoria:";
 
     const grid = document.createElement("div");
 
     grid.classList.add("grid-categorias");
 
-    encontrados.forEach(inseto => {
+    const encontrados = insetos.filter(function (inseto) {
 
-        criarCardInseto(grid, inseto);
+        return inseto.categoria === categoria;
 
     });
+
+    encontrados.forEach(function (inseto) {
+
+        const card = criarCard(inseto);
+
+        grid.appendChild(card);
+
+    });
+
+    bloco.appendChild(titulo);
+
+    bloco.appendChild(texto);
 
     bloco.appendChild(grid);
 
@@ -264,11 +262,11 @@ function mostrarCategoria(categoria) {
 }
 
 
-// ==========================================
-// CRIAR CARD DO INSETO
-// ==========================================
+// ========================================
+// CRIAR CARD
+// ========================================
 
-function criarCardInseto(container, inseto) {
+function criarCard(inseto) {
 
     const card = document.createElement("div");
 
@@ -280,60 +278,126 @@ function criarCardInseto(container, inseto) {
 
     const descricao = document.createElement("p");
 
-    descricao.textContent = inseto.descricao;
+    descricao.textContent =
+        inseto.descricao;
 
     const link = document.createElement("a");
 
     link.href = "#";
 
-    link.textContent = "Ver curiosidade";
+    link.textContent = "Ver informações";
 
-    link.addEventListener("click", event => {
+    link.addEventListener("click", function (event) {
 
         event.preventDefault();
 
-        mostrarCuriosidade(inseto);
+        mostrarInseto(inseto);
 
     });
 
     card.appendChild(titulo);
+
     card.appendChild(descricao);
+
     card.appendChild(link);
 
-    container.appendChild(card);
+    return card;
 
 }
 
 
-// ==========================================
-// CURIOSIDADE
-// ==========================================
+// ========================================
+// MOSTRAR INFORMAÇÕES
+// ========================================
 
-function mostrarCuriosidade(inseto) {
+function mostrarInseto(inseto) {
 
-    const antiga = document.querySelector("#curiosidade-inseto");
+    const antigo =
+        document.querySelector(".informacoes-inseto");
 
-    if (antiga) {
-        antiga.remove();
+    if (antigo) {
+
+        antigo.remove();
+
     }
 
     const bloco = document.createElement("section");
 
     bloco.classList.add("artigo-bloco");
 
-    bloco.id = "curiosidade-inseto";
+    bloco.classList.add("informacoes-inseto");
 
-    bloco.innerHTML = `
-        <h2>Curiosidade sobre ${inseto.nome}</h2>
+    const titulo = document.createElement("h2");
 
-        <p>
-            ${inseto.curiosidade}
-        </p>
+    titulo.textContent = inseto.nome;
 
-        <p>
-            Categoria: ${inseto.categoria}
-        </p>
-    `;
+    const descricao = document.createElement("p");
+
+    descricao.textContent =
+        inseto.descricao;
+
+    bloco.appendChild(titulo);
+
+    bloco.appendChild(descricao);
+
+    if (inseto.categoria) {
+
+        const categoria = document.createElement("p");
+
+        categoria.textContent =
+            "Categoria: " + inseto.categoria;
+
+        bloco.appendChild(categoria);
+
+    }
+
+    if (inseto.nome_cientifico) {
+
+        const cientifico = document.createElement("p");
+
+        cientifico.textContent =
+            "Nome científico: " +
+            inseto.nome_cientifico;
+
+        bloco.appendChild(cientifico);
+
+    }
+
+    if (inseto.habitat) {
+
+        const habitat = document.createElement("p");
+
+        habitat.textContent =
+            "Habitat: " +
+            inseto.habitat;
+
+        bloco.appendChild(habitat);
+
+    }
+
+    if (inseto.alimentacao) {
+
+        const alimentacao = document.createElement("p");
+
+        alimentacao.textContent =
+            "Alimentação: " +
+            inseto.alimentacao;
+
+        bloco.appendChild(alimentacao);
+
+    }
+
+    if (inseto.curiosidade) {
+
+        const curiosidade = document.createElement("p");
+
+        curiosidade.textContent =
+            "Curiosidade: " +
+            inseto.curiosidade;
+
+        bloco.appendChild(curiosidade);
+
+    }
 
     conteudo.appendChild(bloco);
 
@@ -344,29 +408,26 @@ function mostrarCuriosidade(inseto) {
 }
 
 
-// ==========================================
+// ========================================
 // SIDEBAR
-// ==========================================
+// ========================================
 
-function carregarSidebar() {
-
-    if (!sidebar) {
-        return;
-    }
+function mostrarSidebar() {
 
     sidebar.innerHTML = "";
 
-    criarSidebarCategorias();
-    criarSidebarInformacoes();
+    mostrarCategoriasSidebar();
+
+    mostrarInformacoesSidebar();
 
 }
 
 
-// ==========================================
-// SIDEBAR - CATEGORIAS
-// ==========================================
+// ========================================
+// CATEGORIAS DA SIDEBAR
+// ========================================
 
-function criarSidebarCategorias() {
+function mostrarCategoriasSidebar() {
 
     const caixa = document.createElement("div");
 
@@ -378,7 +439,9 @@ function criarSidebarCategorias() {
 
     const lista = document.createElement("ul");
 
-    obterCategorias().forEach(categoria => {
+    const categorias = pegarCategorias();
+
+    categorias.forEach(function (categoria) {
 
         const item = document.createElement("li");
 
@@ -388,7 +451,7 @@ function criarSidebarCategorias() {
 
         link.textContent = categoria;
 
-        link.addEventListener("click", event => {
+        link.addEventListener("click", function (event) {
 
             event.preventDefault();
 
@@ -403,6 +466,7 @@ function criarSidebarCategorias() {
     });
 
     caixa.appendChild(titulo);
+
     caixa.appendChild(lista);
 
     sidebar.appendChild(caixa);
@@ -410,11 +474,11 @@ function criarSidebarCategorias() {
 }
 
 
-// ==========================================
-// SIDEBAR - INFORMAÇÕES
-// ==========================================
+// ========================================
+// INFORMAÇÕES DA SIDEBAR
+// ========================================
 
-function criarSidebarInformacoes() {
+function mostrarInformacoesSidebar() {
 
     const caixa = document.createElement("div");
 
@@ -427,15 +491,19 @@ function criarSidebarInformacoes() {
     const total = document.createElement("p");
 
     total.textContent =
-        `Total de insetos: ${insetos.length}`;
+        "Insetos cadastrados: " +
+        insetos.length;
 
     const categorias = document.createElement("p");
 
     categorias.textContent =
-        `Total de categorias: ${obterCategorias().length}`;
+        "Categorias: " +
+        pegarCategorias().length;
 
     caixa.appendChild(titulo);
+
     caixa.appendChild(total);
+
     caixa.appendChild(categorias);
 
     sidebar.appendChild(caixa);
@@ -443,30 +511,26 @@ function criarSidebarInformacoes() {
 }
 
 
-// ==========================================
-// NAVEGAÇÃO
-// ==========================================
+// ========================================
+// MENU
+// ========================================
 
-function configurarNavegacao() {
+function configurarMenu() {
 
-    if (!navegacao) {
+    if (!menu) {
         return;
     }
 
-    const links = navegacao.querySelectorAll("a");
+    const links = menu.querySelectorAll("a");
 
-    links.forEach(link => {
+    links.forEach(function (link) {
 
-        link.addEventListener("click", event => {
+        link.addEventListener("click", function () {
 
-            const destino = link.getAttribute("href");
+            links.forEach(function (item) {
 
-            if (!destino || destino === "#") {
-                event.preventDefault();
-            }
-
-            links.forEach(item => {
                 item.classList.remove("ativo");
+
             });
 
             link.classList.add("ativo");
@@ -478,63 +542,70 @@ function configurarNavegacao() {
 }
 
 
-// ==========================================
+// ========================================
 // PESQUISA
-// ==========================================
+// ========================================
 
-function pesquisarInsetos(termo) {
+function pesquisarInsetos(texto) {
 
-    termo = termo.toLowerCase().trim();
+    texto = texto.toLowerCase();
 
-    const antigo = document.querySelector("#resultado-pesquisa");
-
-    if (antigo) {
-        antigo.remove();
-    }
-
-    if (termo === "") {
-        carregarPagina();
-        return;
-    }
-
-    const resultados = insetos.filter(inseto => {
+    const resultados = insetos.filter(function (inseto) {
 
         return (
-            inseto.nome.toLowerCase().includes(termo) ||
-            inseto.categoria.toLowerCase().includes(termo) ||
-            inseto.descricao.toLowerCase().includes(termo)
+            inseto.nome
+                .toLowerCase()
+                .includes(texto)
+
+            ||
+
+            inseto.categoria
+                .toLowerCase()
+                .includes(texto)
+
+            ||
+
+            inseto.descricao
+                .toLowerCase()
+                .includes(texto)
         );
 
     });
 
-    mostrarResultadosPesquisa(resultados, termo);
+    mostrarPesquisa(resultados, texto);
 
 }
 
 
-// ==========================================
-// RESULTADOS DA PESQUISA
-// ==========================================
+// ========================================
+// MOSTRAR PESQUISA
+// ========================================
 
-function mostrarResultadosPesquisa(resultados, termo) {
+function mostrarPesquisa(resultados, texto) {
+
+    const antigo =
+        document.querySelector(".resultado-pesquisa");
+
+    if (antigo) {
+
+        antigo.remove();
+
+    }
 
     const bloco = document.createElement("section");
 
     bloco.classList.add("artigo-bloco");
 
-    bloco.id = "resultado-pesquisa";
+    bloco.classList.add("resultado-pesquisa");
 
     const titulo = document.createElement("h2");
 
-    titulo.textContent = "Resultado da pesquisa";
+    titulo.textContent = "Pesquisa";
 
-    bloco.appendChild(titulo);
+    const textoPesquisa = document.createElement("p");
 
-    const texto = document.createElement("p");
-
-    texto.textContent = `Pesquisa por: ${termo}`;
-
-    bloco.appendChild(texto);
+    textoPesquisa.textContent =
+        'Resultados para: "' + texto + '"';
 
     const grid = document.createElement("div");
 
@@ -546,38 +617,49 @@ function mostrarResultadosPesquisa(resultados, termo) {
 
         card.classList.add("card-categoria");
 
-        card.innerHTML = `
-            <h3>Nenhum resultado</h3>
-            <p>
-                Nenhum inseto foi encontrado.
-            </p>
-        `;
+        const tituloCard = document.createElement("h3");
+
+        tituloCard.textContent =
+            "Nenhum resultado";
+
+        const textoCard = document.createElement("p");
+
+        textoCard.textContent =
+            "Nenhum inseto foi encontrado.";
+
+        card.appendChild(tituloCard);
+
+        card.appendChild(textoCard);
 
         grid.appendChild(card);
 
-    } else {
+    }
 
-        resultados.forEach(inseto => {
+    else {
 
-            criarCardInseto(grid, inseto);
+        resultados.forEach(function (inseto) {
+
+            grid.appendChild(
+                criarCard(inseto)
+            );
 
         });
 
     }
 
+    bloco.appendChild(titulo);
+
+    bloco.appendChild(textoPesquisa);
+
     bloco.appendChild(grid);
 
     conteudo.appendChild(bloco);
 
-    bloco.scrollIntoView({
-        behavior: "smooth"
-    });
-
 }
 
 
-// ==========================================
+// ========================================
 // DISPONIBILIZAR PESQUISA
-// ==========================================
+// ========================================
 
-window.pesquisarInsetos = pesquisarInsetos;rface
+window.pesquisarInsetos = pesquisarInsetos;
